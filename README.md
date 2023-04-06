@@ -33,3 +33,5 @@ There are few key features provided by current tag:
 ## Open Source
 
 GA4 Advanced Tag for GTM Server Side is developed and maintained by [Stape Team](https://stape.io/) under the Apache 2.0 license.
+
+Sponsored by Maxwell Stanford.
