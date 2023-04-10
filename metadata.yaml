@@ -1,4 +1,6 @@
 homepage: 'https://stape.io/'
 versions:
+  - sha: 42eecce3f90efe2fd7e0b736afba233d1196c6a0
+    changeNotes: Allow to override the request headers.
   - sha: fe0d38dccdf94feaf10220e584bf06d952cd6a44
     changeNotes: Initial release.
