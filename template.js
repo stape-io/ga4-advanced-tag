@@ -76,6 +76,16 @@ if (queryParamsString) {
 const body = events.length
   ? events.map(objectToQueryString).join('\n')
   : undefined;
+const headers = {
+  'Content-Type': 'text/plain;charset=UTF-8',
+  'User-Agent': userAgent,
+};
+
+if (data.requestHeaders && data.requestHeaders.length) {
+  data.requestHeaders.forEach((header) => {
+    headers[header.name] = header.value;
+  });
+}
 
 if (isLoggingEnabled) {
   logToConsole(
@@ -91,10 +101,7 @@ if (isLoggingEnabled) {
 sendHttpRequest(
   postUrl,
   {
-    headers: {
-      'Content-Type': 'text/plain;charset=UTF-8',
-      'User-Agent': userAgent,
-    },
+    headers: headers,
     method: 'POST',
   },
   body

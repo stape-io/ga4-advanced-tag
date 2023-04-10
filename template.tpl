@@ -225,6 +225,45 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "GROUP",
+    "name": "requestHeadersGroup",
+    "displayName": "Request Headers",
+    "groupStyle": "ZIPPY_CLOSED",
+    "subParams": [
+      {
+        "type": "PARAM_TABLE",
+        "name": "requestHeaders",
+        "displayName": "",
+        "paramTableColumns": [
+          {
+            "param": {
+              "type": "TEXT",
+              "name": "name",
+              "displayName": "Name",
+              "simpleValueType": true,
+              "valueValidators": [
+                {
+                  "type": "NON_EMPTY"
+                }
+              ]
+            },
+            "isUnique": true
+          },
+          {
+            "param": {
+              "type": "TEXT",
+              "name": "value",
+              "displayName": "Value",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          }
+        ],
+        "newRowButtonText": "+ Add header"
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
     "name": "dataSourceGroup",
     "displayName": "Data Source Settings",
     "groupStyle": "ZIPPY_CLOSED",
@@ -361,6 +400,16 @@ if (queryParamsString) {
 const body = events.length
   ? events.map(objectToQueryString).join('\n')
   : undefined;
+const headers = {
+  'Content-Type': 'text/plain;charset=UTF-8',
+  'User-Agent': userAgent,
+};
+
+if (data.requestHeaders && data.requestHeaders.length) {
+  data.requestHeaders.forEach((header) => {
+    headers[header.name] = header.value;
+  });
+}
 
 if (isLoggingEnabled) {
   logToConsole(
@@ -376,10 +425,7 @@ if (isLoggingEnabled) {
 sendHttpRequest(
   postUrl,
   {
-    headers: {
-      'Content-Type': 'text/plain;charset=UTF-8',
-      'User-Agent': userAgent,
-    },
+    headers: headers,
     method: 'POST',
   },
   body
