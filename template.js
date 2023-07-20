@@ -120,12 +120,19 @@ sendHttpRequest(
         })
       );
     }
-    data.gtmOnSuccess();
+    if (!data.useOptimisticScenario) {
+        data.gtmOnSuccess();
+    }
   })
   .catch(() => {
-    data.gtmOnFailure();
+    if(!data.useOptimisticScenario) {
+      data.gtmOnFailure();
+    }
   });
 
+if (data.useOptimisticScenario) {
+  data.gtmOnSuccess();
+}
 function getQueryParams() {
   if (data.defaultParametersToInclude === 'none') return {};
   if (data.dataSource === 'request') return getQueryParamsFromRequest();
