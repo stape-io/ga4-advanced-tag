@@ -1,4 +1,5 @@
 homepage: 'https://stape.io/'
+documentation: 'https://stape.io/blog/google-analytics-4-advanced-tag-for-server-gtm'
 versions:
   - sha: 42eecce3f90efe2fd7e0b736afba233d1196c6a0
     changeNotes: Allow to override the request headers.
