@@ -21,7 +21,7 @@ There are a few key features provided by the current tag:
 
 **User Properties** - Specify which user properties you want to include by default, add overwrites or remove existing.
 
-**Data Source Settings** - By default - incoming requests will be used as a data source for requests to Google Analytics. You can also choose  Event Data (Beta)` - in this case, all request properties will be constructed from the `eventData`. We have a list of parameters copied from [thyngster.com](https://www.thyngster.com/ga4-measurement-protocol-cheatsheet/) (Thanks a lot for your work ❤️), but for now, we don't have a mapping for all of these parameters, so you are welcome to open PR with improvements and fixes.  
+**Data Source Settings** - By default - incoming requests will be used as a data source for requests to Google Analytics. You can also choose `Event Data (Beta)` - in this case, all request properties will be constructed from the `eventData`. We have a list of parameters copied from [thyngster.com](https://www.thyngster.com/ga4-measurement-protocol-cheatsheet/) (Thanks a lot for your work ❤️), but for now, we don't have a mapping for all of these parameters, so you are welcome to open PR with improvements and fixes.  
 
 **Logs Settings** - Specify whether the tag should write to the logs.
 
