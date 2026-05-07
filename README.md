@@ -35,3 +35,6 @@ There are a few key features provided by the current tag:
 GA4 Advanced Tag for GTM Server Side is developed and maintained by [Stape Team](https://stape.io/) under the Apache 2.0 license.
 
 Sponsored by Maxwell Stanford.
+
+### GTM Gallery Status
+🟢 [Listed](https://tagmanager.google.com/gallery/#/owners/stape-io/templates/ga4-advanced-tag)
