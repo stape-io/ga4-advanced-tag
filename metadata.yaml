@@ -1,6 +1,8 @@
 homepage: 'https://stape.io/'
 documentation: 'https://stape.io/blog/google-analytics-4-advanced-tag-for-server-gtm'
 versions:
+  - sha: 46908ef7cb291ea0838c09ad7149a326b0ae209a
+    changeNotes: Logging removal.
   - sha: 293aaffcf556b69d2fa03fa8a374f6710e1f8337
     changeNotes: Event name and IP override fix.
   - sha: 42eecce3f90efe2fd7e0b736afba233d1196c6a0

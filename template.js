@@ -1,18 +1,12 @@
-const logToConsole = require('logToConsole');
-const getContainerVersion = require('getContainerVersion');
 const getRequestHeader = require('getRequestHeader');
 const getAllEventData = require('getAllEventData');
 const getRequestBody = require('getRequestBody');
 const getRequestQueryParameters = require('getRequestQueryParameters');
 const encodeUriComponent = require('encodeUriComponent');
-const JSON = require('JSON');
 const parseUrl = require('parseUrl');
 const Object = require('Object');
 const sendHttpRequest = require('sendHttpRequest');
 const getType = require('getType');
-
-const isLoggingEnabled = determinateIsLoggingEnabled();
-const traceId = getRequestHeader('trace-id');
 
 const userAgent = getRequestHeader('User-Agent');
 const eventData = getAllEventData();
@@ -82,9 +76,7 @@ const queryParamsString = objectToQueryString(queryParams);
 if (queryParamsString) {
   postUrl = postUrl + '?' + queryParamsString;
 }
-const body = events.length
-  ? events.map(objectToQueryString).join('\n')
-  : undefined;
+const body = events.length ? events.map(objectToQueryString).join('\n') : undefined;
 const headers = {
   'Content-Type': 'text/plain;charset=UTF-8',
   'User-Agent': userAgent
@@ -96,17 +88,6 @@ if (data.requestHeaders && data.requestHeaders.length) {
   });
 }
 
-if (isLoggingEnabled) {
-  logToConsole(
-    JSON.stringify({
-      Name: 'GA4Advanced',
-      Type: 'Request',
-      TraceId: traceId,
-      EventName: eventName
-    })
-  );
-}
-
 sendHttpRequest(
   postUrl,
   {
@@ -116,19 +97,6 @@ sendHttpRequest(
   body
 )
   .then((response) => {
-    if (isLoggingEnabled) {
-      logToConsole(
-        JSON.stringify({
-          Name: 'GA4Advanced',
-          Type: 'Response',
-          TraceId: traceId,
-          EventName: eventName,
-          ResponseStatusCode: response.statusCode,
-          ResponseHeaders: response.headers,
-          ResponseBody: response.body
-        })
-      );
-    }
     data.gtmOnSuccess();
   })
   .catch(() => {
@@ -281,9 +249,7 @@ function getQueryParamsFromEventData() {
     },
     {
       param: '_c', // is Conversion
-      value: eventData['x-ga-system_properties']
-        ? eventData['x-ga-system_properties'].c
-        : undefined
+      value: eventData['x-ga-system_properties'] ? eventData['x-ga-system_properties'].c : undefined
     },
     {
       param: '_ee', // external event
@@ -482,11 +448,7 @@ function getQueryParamsFromEventData() {
       value: clientHints.full_version_list
         ? clientHints.full_version_list
             .map((item) => {
-              return (
-                encodeUriComponent(item.brand) +
-                ';' +
-                encodeUriComponent(item.version)
-              );
+              return encodeUriComponent(item.brand) + ';' + encodeUriComponent(item.version);
             })
             .join('|')
         : undefined
@@ -666,35 +628,11 @@ function deleteUserProperty(obj, propertyName) {
 
 function objectToQueryString(obj) {
   return Object.keys(obj)
-    .map((key) =>
-      isValidParam(obj[key]) ? key + '=' + encodeUriComponent(obj[key]) : key
-    )
+    .map((key) => (isValidParam(obj[key]) ? key + '=' + encodeUriComponent(obj[key]) : key))
     .join('&');
-}
-
-function determinateIsLoggingEnabled() {
-  const containerVersion = getContainerVersion();
-  const isDebug = !!(
-    containerVersion &&
-    (containerVersion.debugMode || containerVersion.previewMode)
-  );
-
-  if (!data.logType) {
-    return isDebug;
-  }
-
-  if (data.logType === 'no') {
-    return false;
-  }
-
-  if (data.logType === 'debug') {
-    return isDebug;
-  }
-
-  return data.logType === 'always';
 }
 
 function isValidParam(value) {
   const valueType = getType(value);
-  return valueType !== 'undefined' && valueType !== 'null' && value !== '';
+  return valueType !== 'undefined' && valueType !== 'null' && value !== '' && value === value;
 }
